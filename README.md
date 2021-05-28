@@ -108,10 +108,10 @@ Run a command inside a running container:
 ## Remove docker containers
 Remove containers:
   - Single container: `docker rm {DOCKER_CONTAINER_ID}`
-  - All containers: `docker rm $(docker ps -aq -f "name=apigeedocker_apigee*")`
+  - All containers: `docker rm $(docker ps -aq -f "name=docker_apigee*")`
 
 Remove docker volumes:
-  - `docker volume rm $(docker volume ls -q -f "name=apigeedocker_apigee*")`
+  - `docker volume rm $(docker volume ls -q -f "name=docker_apigee*")`
 
 ## NOTES
 - This will have your apigee license so **DO NOT** push it to a public docker registry.
