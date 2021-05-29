@@ -41,7 +41,7 @@ It's recommended to have more than 8GB of RAM to run the 6 containers and \*nix 
 
 ### Clone the repo
 ```
-$ git clone https://github.com/maurogonzalez/apigee-docker.git
+$ git clone https://github.com/ajaymahale/apigee-docker.git
 ```
 
 ### Fresh install
