@@ -21,12 +21,12 @@ RUN chmod +x /wait-for-it.sh
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN yum install -y wget which openssl && \   
-  wget https://software.apigee.com/bootstrap_4.17.09.sh -O /tmp/apigee/bootstrap_4.17.09.sh && \
+  wget https://software.apigee.com/bootstrap_4.50.00.sh -O /tmp/apigee/bootstrap_4.50.00.sh && \
   wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
   rpm -ivh epel-release-latest-7.noarch.rpm && \
-  chmod +x /tmp/apigee/bootstrap_4.17.09.sh
+  chmod +x /tmp/apigee/bootstrap_4.50.00.sh
 
-RUN ./tmp/apigee/bootstrap_4.17.09.sh apigeeuser=${ftp_user} apigeepassword=${ftp_pwd} JAVA_FIX=I 
+RUN ./tmp/apigee/bootstrap_4.50.00.sh apigeeuser=${ftp_user} apigeepassword=${ftp_pwd} JAVA_FIX=I 
 RUN /opt/apigee/apigee-service/bin/apigee-service apigee-setup install
 
 CMD ["/bin/bash"]

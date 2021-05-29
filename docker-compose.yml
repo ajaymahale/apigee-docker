@@ -2,7 +2,7 @@ version: "3"
 services:
 
   apigee_node1:  
-    image: apigee_base:1709
+    image: apigee_base:5000
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - ADMIN_PWD=${ADMIN_PWD}
@@ -63,7 +63,7 @@ services:
         ipv4_address: ${NODE1_IP}
 
   apigee_node2: 
-    image: apigee_base:1709
+    image: apigee_base:5000
     environment:
       - NODE1_IP=${NODE1_IP}
       - NODE2_IP=${NODE2_IP}
@@ -101,7 +101,7 @@ services:
         ipv4_address: ${NODE2_IP}
 
   apigee_node3:
-    image: apigee_base:1709
+    image: apigee_base:5000
     environment:
       - NODE1_IP=${NODE1_IP}
       - NODE2_IP=${NODE2_IP}
@@ -140,7 +140,7 @@ services:
         ipv4_address: ${NODE3_IP}
 
   apigee_node4:    
-    image: apigee_base:1709
+    image: apigee_base:5000
     environment:
       - NODE1_IP=${NODE1_IP}
       - NODE2_IP=${NODE2_IP}
@@ -170,7 +170,7 @@ services:
         ipv4_address: ${NODE4_IP}
 
   apigee_node5:    
-    image: apigee_base:1709
+    image: apigee_base:5000
     environment:
       - NODE1_IP=${NODE1_IP}
       - NODE2_IP=${NODE2_IP}
@@ -199,7 +199,7 @@ services:
         ipv4_address: ${NODE5_IP}
 
   apigee_node6:    
-    image: apigee_base:1709
+    image: apigee_base:5000
     environment:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - ADMIN_PWD=${ADMIN_PWD}
