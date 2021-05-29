@@ -20,7 +20,7 @@ please refer to the [Official Documentation](https://docs.apigee.com/private-clo
 It's recommended to have more than 8GB of RAM to run the 6 containers and \*nix OS.
 
 ## Description
-- Builds an Apigee 4.17.09 image with the **apigee-setup-utility** that will run Centos7 with OpenJDK 1.8.
+- Builds an Apigee 4.50.00 image with the **apigee-setup-utility** that will run Centos7 with OpenJDK 1.8.
 
 - Installs 5-node Apigee Edge planet and Developer portal:
   - node1:
