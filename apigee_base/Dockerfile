@@ -20,7 +20,7 @@ RUN chmod +x /wait-for-it.sh
 # Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-RUN yum install -y wget which openssl nc && \   
+RUN yum install -y wget which openssl nc deltarpm && \   
   wget https://software.apigee.com/bootstrap_4.50.00.sh -O /tmp/apigee/bootstrap_4.50.00.sh && \
   wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
   rpm -ivh epel-release-latest-7.noarch.rpm && \
