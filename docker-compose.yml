@@ -34,13 +34,13 @@ services:
             # Install ZK+CS_1
             /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /tmp/apigee/response.txt           
             # Wait for CS ring 
-            ./wait-for-it.sh -t 90 ${NODE1_IP}:7199 --strict -- echo "CS_1 is up"
-            ./wait-for-it.sh -t 90 ${NODE2_IP}:7199 --strict -- echo "CS_2 is up"
-            ./wait-for-it.sh -t 90 ${NODE3_IP}:7199 --strict -- echo "CS_3 is up"
+            ./wait-for-it.sh -t 190 ${NODE1_IP}:7199 --strict -- echo "CS_1 is up"
+            ./wait-for-it.sh -t 190 ${NODE2_IP}:7199 --strict -- echo "CS_2 is up"
+            ./wait-for-it.sh -t 190 ${NODE3_IP}:7199 --strict -- echo "CS_3 is up"
             # Install OpenLDAP, Management Server and Edge UI
             /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /tmp/apigee/response.txt            
             # Wait for last component to install
-            ./wait-for-it.sh -t 1000 ${NODE5_IP}:5432 --strict -- echo "PG_standby is up"
+            ./wait-for-it.sh -t 1100 ${NODE5_IP}:5432 --strict -- echo "PG_standby is up"
             # Org provisioning
             /opt/apigee/apigee-service/bin/apigee-service apigee-provision setup-org -f /tmp/apigee/response-provision.txt
             tail -f /dev/null
@@ -76,11 +76,11 @@ services:
       - |
           if [ ! -d "/opt/apigee/edge-router" ]; then            
             # Wait for CS_1 node
-            ./wait-for-it.sh -t 90 ${NODE1_IP}:7199 --strict -- echo "CS_1 is up"
+            ./wait-for-it.sh -t 190 ${NODE1_IP}:7199 --strict -- echo "CS_1 is up"
             # Install ZK+CS_2
             /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /tmp/apigee/response.txt            
             # Wait for MS
-            ./wait-for-it.sh -t 520 ${NODE1_IP}:8080 --strict -- echo "MS_1 is up"
+            ./wait-for-it.sh -t 620 ${NODE1_IP}:8080 --strict -- echo "MS_1 is up"
             # Install RMP_1
             /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /tmp/apigee/response.txt
             tail -f /dev/null
@@ -114,12 +114,12 @@ services:
       - | 
         if [ ! -d "/opt/apigee/edge-router" ]; then          
           # Wait for CS_1 and CS_2 nodes
-          ./wait-for-it.sh -t 90 ${NODE1_IP}:7199 --strict -- echo "CS_1 is up"
-          ./wait-for-it.sh -t 120 ${NODE2_IP}:7199 --strict -- echo "CS_2 is up"
+          ./wait-for-it.sh -t 190 ${NODE1_IP}:7199 --strict -- echo "CS_1 is up"
+          ./wait-for-it.sh -t 220 ${NODE2_IP}:7199 --strict -- echo "CS_2 is up"
           # Install ZK+CS_3
           /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /tmp/apigee/response.txt          
           # Wait for MS
-          ./wait-for-it.sh -t 520 ${NODE1_IP}:8080 --strict -- echo "MS_1 is up"
+          ./wait-for-it.sh -t 620 ${NODE1_IP}:8080 --strict -- echo "MS_1 is up"
           # Install RMP_2
           /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /tmp/apigee/response.txt
           tail -f /dev/null
@@ -153,8 +153,8 @@ services:
       - |
           if [ ! -d "/opt/apigee/edge-postgres-server" ]; then
             # Wait for MP_1 and MP_2
-            ./wait-for-it.sh -t 600 ${NODE2_IP}:8082 --strict -- echo "MP_1 is up"
-            ./wait-for-it.sh -t 600 ${NODE3_IP}:8082 --strict -- echo "MP_2 is up"
+            ./wait-for-it.sh -t 700 ${NODE2_IP}:8082 --strict -- echo "MP_1 is up"
+            ./wait-for-it.sh -t 700 ${NODE3_IP}:8082 --strict -- echo "MP_2 is up"
             # Install PG_master, QPID, QS and PS
             /opt/apigee/apigee-setup/bin/setup.sh -p sax -f /tmp/apigee/response.txt                    
             tail -f /dev/null
@@ -182,7 +182,7 @@ services:
       - -c
       - |
           # Wait for PG_master
-          ./wait-for-it.sh -t 700 ${NODE4_IP}:5432 -- echo "PG_Master is up"
+          ./wait-for-it.sh -t 800 ${NODE4_IP}:5432 -- echo "PG_Master is up"
           if [ ! -d "/opt/apigee/edge-postgres-server" ]; then
             # Install PG_standby, QPID, QS and PS 
             /opt/apigee/apigee-setup/bin/setup.sh -p sax -f /tmp/apigee/response.txt                    
@@ -198,42 +198,42 @@ services:
       vpcbr:
         ipv4_address: ${NODE5_IP}
 
-  apigee_node6:    
-    image: apigee_base:5000
-    environment:
-      - ADMIN_EMAIL=${ADMIN_EMAIL}
-      - ADMIN_PWD=${ADMIN_PWD}
-      - DP_PG_USER=${DP_PG_USER}
-      - DP_PG_PASS=${DP_PG_PASS}
-      - DEVPORTAL_ADMIN_USER=$DEVPORTAL_ADMIN_USER
-      - DEVPORTAL_ADMIN_PWD=${DEVPORTAL_ADMIN_PWD}
-      - DEVPORTAL_ADMIN_EMAIL=${DEVPORTAL_ADMIN_EMAIL}
-      - ORG=${ORG}
-      - ORG_ENV=${ORG_ENV}
-      - NODE1_IP=${NODE1_IP}      
-      - NODE4_IP=${NODE4_IP}
-    command:
-      - /bin/bash
-      - -c
-      - | 
-          if [ ! -d "/opt/apigee/apigee-lb" ]; then
-            # Wait for last component to install
-            ./wait-for-it.sh -t 1000 ${NODE5_IP}:5432 --strict -- echo "PG_standby is up"
-            # Install DP
-            /opt/apigee/apigee-setup/bin/setup.sh -p dp -f /tmp/apigee/response-dp.txt
-            tail -f /dev/null
-          else
-            # Wait for MS
-            ./wait-for-it.sh -t 1000 ${NODE1_IP}:8080 --strict -- echo "MS is up"  
-            # Start DP and PG
-            /opt/apigee/apigee-service/bin/apigee-all start
-            tail -f /dev/null
-          fi
-    volumes:
-      - apigee_node6_vol:/opt
-    networks:
-      vpcbr:
-        ipv4_address: ${NODE6_IP}
+  # apigee_node6:    
+  #   image: apigee_base:5000
+  #   environment:
+  #     - ADMIN_EMAIL=${ADMIN_EMAIL}
+  #     - ADMIN_PWD=${ADMIN_PWD}
+  #     - DP_PG_USER=${DP_PG_USER}
+  #     - DP_PG_PASS=${DP_PG_PASS}
+  #     - DEVPORTAL_ADMIN_USER=$DEVPORTAL_ADMIN_USER
+  #     - DEVPORTAL_ADMIN_PWD=${DEVPORTAL_ADMIN_PWD}
+  #     - DEVPORTAL_ADMIN_EMAIL=${DEVPORTAL_ADMIN_EMAIL}
+  #     - ORG=${ORG}
+  #     - ORG_ENV=${ORG_ENV}
+  #     - NODE1_IP=${NODE1_IP}      
+  #     - NODE4_IP=${NODE4_IP}
+  #   command:
+  #     - /bin/bash
+  #     - -c
+  #     - | 
+  #         if [ ! -d "/opt/apigee/apigee-lb" ]; then
+  #           # Wait for last component to install
+  #           ./wait-for-it.sh -t 1000 ${NODE5_IP}:5432 --strict -- echo "PG_standby is up"
+  #           # Install DP
+  #           /opt/apigee/apigee-setup/bin/setup.sh -p dp -f /tmp/apigee/response-dp.txt
+  #           tail -f /dev/null
+  #         else
+  #           # Wait for MS
+  #           ./wait-for-it.sh -t 1000 ${NODE1_IP}:8080 --strict -- echo "MS is up"  
+  #           # Start DP and PG
+  #           /opt/apigee/apigee-service/bin/apigee-all start
+  #           tail -f /dev/null
+  #         fi
+  #   volumes:
+  #     - apigee_node6_vol:/opt
+  #   networks:
+  #     vpcbr:
+  #       ipv4_address: ${NODE6_IP}
 
 networks:
   vpcbr:
